@@ -6,27 +6,35 @@ GrobotEyes::GrobotEyes(uint16_t eyeColor, uint16_t bgColor)
   : _eyeColor(eyeColor), _bgColor(bgColor){
 
     lastFrameTime = millis();
-
-    //declaring variable values 
-    blinkTime = 3000;
-    blinkDelay = 200;
+    lastBlinkTime = millis();
+    
+    //getting eye values from config
+    eyeRadius = DEFAULT_EYE_RADIUS;
+    eyeGap = DEFAULT_EYE_GAP;
     eyeOffset = eyeRadius + eyeGap;
+
+    //gwtting eyelid values from config 
+    blinkTime = DEFAULT_BLINK_TIME;
+    blinkDelay = DEFAULT_BLINK_DELAY;
+
+    //mood value
+    switchInterval = 5000;
 
 
 // Setting up initial "Eye" states so they aren't empty
-    currentL = {0, 0, 0, 30, 45, 0, 0, 0, 0, 0};
+    setBase(currentL, 0, 0, 0, DEFAULT_PUPIL_RADIUS, eyeRadius);
     currentR = currentL;
     targetL  = currentL;
     targetR  = currentL;
     baseL    = currentL;
     baseR    = currentL;
 
+    canvasX = 0; canvasY = 0;
+
   }
 
 //adding spring physics
 void GrobotEyes::applySpring(float &current, float &velocity, float target, float dt, float stiffness, float damping){
-  // float stiffness= 180.0;
-  // float damping = 15.0;
   //hookes law f = -kx
   float force = (target-current) * stiffness;
   
@@ -95,12 +103,20 @@ void GrobotEyes::drawEye(TFT_eSprite &canvas, int eX, int eY, int pR, int eyeRad
 void GrobotEyes::renderEmotions(TFT_eSprite &canvas){
   
   updateDeltaTime();
-  //fill bg black eyery refresh so that thre aint no trail behind
+  //fill bg color eyery refresh so that there ain't no trail left behind
   canvas.fillSprite(_bgColor);
   blink();
-  //entire canvas 
-  applySpring(canvasX, vCanvasX, targetCanvasX, dT, 140.0, 18);
-  applySpring(canvasY, vCanvasY, targetCanvasY, dT, 140.0, 18);
+
+  //get center of the canvas
+  int centerX = canvas.width() / 2;
+  int centerY = canvas.height() / 2;
+
+  //scaling to work with any display
+  float scale = (float)canvas.height() / BASE_DESIGN_HEIGHT;
+  //bouncing physics for entire canvas 
+  applySpring(canvasX, vCanvasX, targetCanvasX, dT, CANVAS_STIFFNESS, CANVAS_DAMPING);
+  applySpring(canvasY, vCanvasY, targetCanvasY, dT, CANVAS_STIFFNESS, CANVAS_DAMPING);
+
  // LEFT EYE: Apply spring physics to everything
   applySpring(currentL.topH, currentL.vTop,  targetL.topH,  dT);
   applySpring(currentL.botH, currentL.vBot,  targetL.botH,  dT);
@@ -115,15 +131,17 @@ void GrobotEyes::renderEmotions(TFT_eSprite &canvas){
   applySpring(currentR.eyeRadius, currentR.veyeRadius, targetR.eyeRadius, dT);
 
   // drawing actual eyes
-  drawEye(canvas, 160 - eyeOffset, eyeY, (int)currentL.pR, (int)currentL.eyeRadius, (int)currentL.topH, (int)currentL.botH, (int)currentL.tilt, true);
-  drawEye(canvas, 160 + eyeOffset, eyeY, (int)currentR.pR, (int)currentR.eyeRadius, (int)currentR.topH, (int)currentR.botH, (int)currentR.tilt, false);
+  drawEye(canvas, centerX - (int)(eyeOffset * scale), centerY, (int)(currentL.pR * scale), (int)(currentL.eyeRadius * scale), (int)(currentL.topH * scale), (int)(currentL.botH * scale), (int)(currentL.tilt * scale), true);
+  drawEye(canvas, centerX + (int)(eyeOffset * scale), centerY, (int)(currentR.pR * scale), (int)(currentR.eyeRadius * scale), (int)(currentR.topH * scale), (int)(currentR.botH * scale), (int)(currentR.tilt * scale), false);
 
-  canvas.pushSprite((int)canvasX, (int)canvasY);
+  int screenYAnchor = (PHYSICAL_SCREEN_HEIGHT - canvas.height()) / 2;
+  canvas.pushSprite((int)canvasX, screenYAnchor + (int)canvasY);
 
 }
 
-//contains the final state of given emotion.
+//Built-in Moods (legacy code)
 void GrobotEyes::setEmotion(String mood) {
+  
   if (mood == "NEUTRAL") {
     setBase(baseL, 0, 0, 0, 30, 45); 
     setBase(baseR, 0, 0, 0, 30, 45);
@@ -168,6 +186,20 @@ void GrobotEyes::setEmotion(String mood) {
   // Sync targets with the new base mood
   targetL = baseL;
   targetR = baseR;
+}
+
+// To set custom emotions for Asymmetrical eyes
+void GrobotEyes::setEmotion(MoodData left, MoodData right) {
+    setBase(baseL, left.topH, left.botH, left.tilt, left.pR, left.radius);
+    setBase(baseR, right.topH, right.botH, right.tilt, right.pR, right.radius);
+    
+    targetL = baseL;
+    targetR = baseR;
+}
+
+// To set custom emotions for Symmetrical eyes
+void GrobotEyes::setEmotion(MoodData mood) {
+    setEmotion(mood, mood); 
 }
 
 //to set base values of variables that are not declared directly while setting the mood
@@ -232,14 +264,14 @@ void GrobotEyes::moodSwitch(bool toSwitch){
 
 void GrobotEyes::lookAt(int x, int y) {
   targetCanvasX = x; 
-  targetCanvasY = 60 + y; 
+  targetCanvasY = y; 
 }
 
 
-void GrobotEyes::HUD(TFT_eSPI &tft){
-  tft.setCursor(5, 5); // This is now 5 pixels from the physical top
-  tft.setTextColor(TFT_WHITE, TFT_BLACK); 
-  tft.setTextSize(1);
-  tft.print("FPS: ");
-  tft.print((int)currentFPS);
+void GrobotEyes::HUD(TFT_eSPI &canvas){
+  canvas.setCursor(5, 5); // This is now 5 pixels from the physical top
+  canvas.setTextColor(TFT_WHITE, TFT_BLACK); 
+  canvas.setTextSize(1);
+  canvas.print("FPS: ");
+  canvas.print((int)currentFPS);
 }
