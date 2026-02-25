@@ -50,6 +50,8 @@ Should work on any device that supports `TfT_eSPI` library.
 
 [![Watch the video](https://img.youtube.com/vi/KZInFQBnKmU/0.jpg)](https://youtube.com/shorts/KZInFQBnKmU)
 
+* `BasicEye.ino` Running on an esp32 at 35-39 fps.
+
 ---
 
 ##  Repository Structure
