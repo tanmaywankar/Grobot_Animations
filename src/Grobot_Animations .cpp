@@ -48,7 +48,7 @@ void GrobotEyes::applySpring(float &current, float &velocity, float target, floa
 void  GrobotEyes::updateDeltaTime(){
   //code for delta time calculation
   unsigned long currentMicros = micros();
-  dT = (currentMicros - lastFrameTime) / 1000.0; 
+  dT = (currentMicros - lastFrameTime) / 1000000.0; 
   lastFrameTime = currentMicros;
   //fps logic
   if (dT < 0.0001) dT = 0.0001;
