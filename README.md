@@ -2,7 +2,7 @@
 
 A Lightweight, physics-based animation library for robot eyes. Originally designed for the **Grobot** project, this library utilizes **State Machine** logic to create organic, smooth, and expressive eye movements on TFT displays.
 
-Optimized for **ESP32** using the `TFT_eSPI` driver.
+Optimized for **ESP32** using the `TFT_eSPI` driver (should work on any other supported device).
 
 ---
 
@@ -38,6 +38,11 @@ You can trigger different expressions by passing these strings to the `setEmotio
 
 * **Standard:** `NEUTRAL`, `HAPPY`, `ANGRY`, `SAD`, `EXCITED`, `ANNOYED`, `QUESTIONING`
 * **Dynamic Idles:** `IDLE1`, `IDLE2`, `IDLE3` (Asymmetrical movements)
+
+---
+
+##  Tested on esp 32 wroom32
+Should work on any device that supports `TfT_eSPI` library.
 
 ---
 
