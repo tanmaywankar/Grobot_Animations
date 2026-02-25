@@ -47,10 +47,11 @@ void GrobotEyes::applySpring(float &current, float &velocity, float target, floa
 //used to maintain constant speed in case of fps fluctuation
 void  GrobotEyes::updateDeltaTime(){
   //code for delta time calculation
-  unsigned long currentMillis = millis();
-  dT = (currentMillis - lastFrameTime) / 1000.0; 
-  lastFrameTime = currentMillis;
+  unsigned long currentMicros = micros();
+  dT = (currentMicros - lastFrameTime) / 1000.0; 
+  lastFrameTime = currentMicros;
   //fps logic
+  if (dT < 0.0001) dT = 0.0001;
   if (dT > 0) {
     // We use a slight lerp here too so the number doesn't flicker too fast
     float instantFPS = 1.0 / dT;
