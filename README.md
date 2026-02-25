@@ -1,8 +1,8 @@
 # Grobot_Animations
 
-A Lightweight, physics-based animation library for robot eyes. Originally designed for the **Grobot** project, this library utilizes **Spring Kinematics** to create organic, smooth, and expressive eye movements on TFT displays.
+A Lightweight, physics-based animation library for robot eyes. Originally designed for the **Grobot** project, this library utilizes **State Machine** logic to create organic, smooth, and expressive eye movements on TFT displays.
 
-Optimized for **ESP32** and **RP2040 Zero** using the `TFT_eSPI` driver.
+Optimized for **ESP32** using the `TFT_eSPI` driver.
 
 ---
 
@@ -25,7 +25,7 @@ Before installing this library, ensure you have the [TFT_eSPI](https://github.co
 
 | Component | Specification |
 | :--- | :--- |
-| **Microcontroller** | ESP32 (all variants) or RP2040 Zero |
+| **Microcontroller** | ESP32 (all variants) or Pi Pico (all variants) |
 | **Display Driver** | ILI9341, ST7789, or any driver supported by TFT_eSPI |
 | **Communication** | SPI |
 
@@ -43,8 +43,8 @@ You can trigger different expressions by passing these strings to the `setEmotio
 
 ##  Repository Structure
 * **`src/`**: Core library files (`Grobot_Animations.h`, `Grobot_Animations.cpp`).
-* **`examples/`**: Contains `BasicEye.ino` which demonstrates the full cycle of moods.
-* **`keywords.txt`**: Provides syntax highlighting in the Arduino IDE.
+* **`examples/`**: Contains `BasicEye.ino` which demonstrates the full cycle of moods along with other Examples.
+* **`src/Moods.h`**: Can be used to define custom moods.
 
 ---
 
@@ -61,4 +61,3 @@ This project is licensed under the **MIT License**. You are free to use, modify,
 ---
 
 **Author:** [Tanmay Wankar](https://github.com/tanmaywankar)  
-*Final Year BCA Student | IoT & Robotics Enthusiast*
