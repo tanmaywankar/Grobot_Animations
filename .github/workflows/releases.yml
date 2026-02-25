@@ -13,14 +13,14 @@ jobs:
     
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Create Arduino Library Zip
         
         run: zip -r Grobot_Animations.zip . -x ".git*" ".github*"
 
       - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: Grobot_Animations.zip
           name: Release ${{ github.ref_name }}
