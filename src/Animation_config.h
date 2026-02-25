@@ -16,8 +16,9 @@ if using display with other dimensions then please change the values as required
 //default is 120.0
 #define BASE_DESIGN_HEIGHT 120.0
 
-//your screen height
+//your screen dimensions
 #define PHYSICAL_SCREEN_HEIGHT 240.0
+#define PHYSICAL_SCREEN_WIDTH 320.0
 
 //animation Defaults
 #define DEFAULT_STIFFNESS 180.0

@@ -51,5 +51,5 @@ void loop() {
   eyes.renderEmotions(canvas);
 
   // Optional: Display HUD (FPS counter)
-  eyes.HUD(canvas); 
+  eyes.HUD(tft); 
 }

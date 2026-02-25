@@ -135,8 +135,16 @@ void GrobotEyes::renderEmotions(TFT_eSprite &canvas){
   drawEye(canvas, centerX - (int)(eyeOffset * scale), centerY, (int)(currentL.pR * scale), (int)(currentL.eyeRadius * scale), (int)(currentL.topH * scale), (int)(currentL.botH * scale), (int)(currentL.tilt * scale), true);
   drawEye(canvas, centerX + (int)(eyeOffset * scale), centerY, (int)(currentR.pR * scale), (int)(currentR.eyeRadius * scale), (int)(currentR.topH * scale), (int)(currentR.botH * scale), (int)(currentR.tilt * scale), false);
 
-  int screenYAnchor = (PHYSICAL_SCREEN_HEIGHT - canvas.height()) / 2;
-  canvas.pushSprite((int)canvasX, screenYAnchor + (int)canvasY);
+  // 1. Calculate the center position of the sprite on the physical screen
+int screenXAnchor = (PHYSICAL_SCREEN_WIDTH - canvas.width()) / 2;
+int screenYAnchor = (PHYSICAL_SCREEN_HEIGHT - canvas.height()) / 2;
+
+// 2. Add the spring-animated offsets to that anchor
+int finalX = screenXAnchor + (int)canvasX;
+int finalY = screenYAnchor + (int)canvasY;
+
+// 3. Push it
+canvas.pushSprite(finalX, finalY);
 
 }
 
