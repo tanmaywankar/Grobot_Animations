@@ -18,7 +18,7 @@ unsigned long lastSwitch = 0;
 int moodIdx = 0; // using a consistent index name
 
 // Switch through built-in moods using the legacy String system
-String moods[] = {"NEUTRAL", "HAPPY", "ANGRY", "SAD", "EXCITED", "ANNOYED"};
+String moods[] = {"NEUTRAL", "HAPPY", "ANGRY", "SAD", "EXCITED", "ANNOYED", "IDLE1", "IDLE2", "IDLE3"};
 
 void setup() {
   tft.init();

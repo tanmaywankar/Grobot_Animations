@@ -163,10 +163,6 @@ void GrobotEyes::setEmotion(String mood) {
     setBase(baseL, 0, 0, 0, 23, 45); 
     setBase(baseR, 0, 0, 0, 23, 45);
   }
-  else if (mood == "IDLE3") {
-    setBase(baseL, 35, 35, 0, 0, 45); 
-    setBase(baseR, 35, 35, 0, 0, 45);
-  }
   else if (mood == "ANNOYED") {
     setBase(baseL, 0, 35, 25, 0, 45); 
     setBase(baseR, 0, 35, 25, 0, 45);
@@ -182,6 +178,10 @@ void GrobotEyes::setEmotion(String mood) {
   else if (mood == "IDLE2") {
     setBase(baseL, 0, 0, 0, 15, 30);
     setBase(baseR, 0, 0, 0, 30, 45); 
+  }
+    else if (mood == "IDLE3") {
+    setBase(baseL, 35, 35, 0, 0, 45); 
+    setBase(baseR, 35, 35, 0, 0, 45);
   }
 
   // Sync targets with the new base mood
