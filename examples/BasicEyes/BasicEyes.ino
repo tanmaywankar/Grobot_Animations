@@ -11,7 +11,7 @@ TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite canvas = TFT_eSprite(&tft);
 
 // Initialize GrobotEyes(eyeColor, backgroundColor)
-// 0x97E0 is some kinda Green (yea i have no idea what color is called), 0x0000 is Black
+// 0x97E0 is some kind of Green(looked good to me), 0x0000 is Black
 GrobotEyes eyes(0x97E0, 0x0000); 
 
 unsigned long lastSwitch = 0;
@@ -25,17 +25,17 @@ void setup() {
   tft.setRotation(1); 
   tft.fillScreen(TFT_BLACK);
 
-  // Create the drawing buffer. 
+  // Create the drawing buffer based 320*240 display (it will scale accordingly based on display size). 
   canvas.createSprite(320, 120);
 
   eyes.setEmotion("NEUTRAL");
   
   Serial.begin(115200);
-  Serial.println("Grobot Animations Initialized!");
+  Serial.println("Animations Initialized");
 }
 
 void loop() {
-  // Logic: Cycle moods every 4 seconds
+  // Cycle moods every 4 seconds
   if (millis() - lastSwitch > 4000) {
     lastSwitch = millis();
     eyes.setEmotion(moods[moodIdx]);
@@ -44,10 +44,9 @@ void loop() {
     Serial.println(moods[moodIdx]);
 
     moodIdx++;
-    if (moodIdx > 5) moodIdx = 0;
+    if (moodIdx > 8) moodIdx = 0;
   }
 
-  // Physics & Rendering
   // This calculates physics AND pushes the sprite to the physical screen
   eyes.renderEmotions(canvas);
 
