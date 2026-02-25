@@ -1,10 +1,12 @@
+
+#ifndef ANIMATION_CONFIG_H
+#define ANIMATION_CONFIG_H
+
 /*
 All the values here have been put based on a standard 2.4" ili9341 display
 if using display with other dimensions then please change the values as required
 */
 
-#ifndef ANIMATION_CONFIG_H
-#define ANIMATION_CONFIG_H
 
 //change these values as per your device size and requirements
 #define DEFAULT_EYE_RADIUS 45

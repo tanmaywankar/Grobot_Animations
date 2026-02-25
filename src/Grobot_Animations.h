@@ -1,7 +1,7 @@
 #ifndef GROBOT_ANIMATIONS_H
 #define GROBOT_ANIMATIONS_H
 #include "Moods.h"
-#include "Animation_Config.h"
+#include "Animation_config.h"
 #include <Arduino.h>
 #include <TFT_eSPI.h>
 
@@ -43,7 +43,7 @@ class GrobotEyes{
         //the state that we are want to transition to
         EyeState targetL, targetR;
         //the base state of an emotion, so that blinking wont affect the angry eyes
-        EyeState baseL, EyeState baseR;
+        EyeState baseL, baseR;
 
 
         //eye definitons

@@ -14,7 +14,7 @@ const MoodData MOOD_NEUTRAL     = {0, 0, 0, 30, 45};
 const MoodData MOOD_HAPPY       = {0, 50, 0, 30, 45};
 const MoodData MOOD_ANGRY       = {0, 0, 60, 30, 45};
 const MoodData MOOD_SAD         = {0, 0, -60, 27, 45};
-const MoodData MOOD_WINK        = {0, 35, 25, 0, 45}
+const MoodData MOOD_WINK        = {0, 35, 25, 0, 45};
 
 
 #endif
