@@ -1,8 +1,8 @@
 GrobotEyes  KEYWORD1
 setEmotion  KEYWORD2
-renderEmotions	KEYWORD2
+renderEmotions  KEYWORD2
 HUD KEYWORD2
-updateDeltaTime	KEYWORD2
-blink	KEYWORD2
-lookAt	KEYWORD2
-moodSwitch	KEYWORD2
+updateDeltaTime KEYWORD2
+blink   KEYWORD2
+lookAt  KEYWORD2
+moodSwitch  KEYWORD2
