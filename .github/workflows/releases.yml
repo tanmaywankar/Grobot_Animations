@@ -1,0 +1,29 @@
+name: Auto Release Library
+
+on:
+  push:
+    tags:
+      - 'v*' 
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write 
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout
+
+      - name: Create Arduino Library Zip
+        
+        run: zip -r Grobot_Animations.zip . -x ".git*" ".github*"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release
+        with:
+          files: Grobot_Animations.zip
+          name: Release ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+          draft: false
+          prerelease: false
