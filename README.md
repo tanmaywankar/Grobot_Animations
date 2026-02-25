@@ -46,6 +46,12 @@ Should work on any device that supports `TfT_eSPI` library.
 
 ---
 
+## Video Demonstration
+
+[![Watch the video](https://img.youtube.com/vi/KZInFQBnKmU/0.jpg)](https://youtube.com/shorts/KZInFQBnKmU)
+
+---
+
 ##  Repository Structure
 * **`src/`**: Core library files (`Grobot_Animations.h`, `Grobot_Animations.cpp`).
 * **`examples/`**: Contains `BasicEye.ino` which demonstrates the full cycle of moods along with other Examples.
