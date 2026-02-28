@@ -13,7 +13,7 @@ GrobotEyes::GrobotEyes(uint16_t eyeColor, uint16_t bgColor)
     eyeGap = DEFAULT_EYE_GAP;
     eyeOffset = eyeRadius + eyeGap;
 
-    //gwtting eyelid values from config 
+    //getting eyelid values from config 
     blinkTime = DEFAULT_BLINK_TIME;
     blinkDelay = DEFAULT_BLINK_DELAY;
 
@@ -53,7 +53,7 @@ void  GrobotEyes::updateDeltaTime(){
   //fps logic
   if (dT < 0.0001) dT = 0.0001;
   if (dT > 0) {
-    // We use a slight lerp here too so the number doesn't flicker too fast
+    // We use a slight lerp here so the number doesn't flicker too fast
     float instantFPS = 1.0 / dT;
     currentFPS = currentFPS + (instantFPS - currentFPS) * 0.1; 
   }
@@ -61,9 +61,6 @@ void  GrobotEyes::updateDeltaTime(){
 
 //to draw the actual eyes left and right
 void GrobotEyes::drawEye(TFT_eSprite &canvas, int eX, int eY, int pR, int eyeRadius, int lidH, int botH, int tilt, bool isLeft){
-
-  // int lookX = eX + offX;
-  // int lookY = eY + offY;
 
 
   canvas.fillCircle(eX, eY, eyeRadius, _eyeColor);
@@ -263,7 +260,7 @@ void GrobotEyes::moodSwitch(bool toSwitch){
     lookAt(random(-30, 31), random(-20, 21));
     lastMoodSwitch = millis();
     
-    // Randomize the NEXT interval for variety (10s to 15s)
+    // Randomize the NEXT interval for variety (5s to 8s)
     switchInterval = random(5000, 8000);
   }
  

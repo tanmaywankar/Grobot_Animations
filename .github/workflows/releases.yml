@@ -15,6 +15,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v6
 
+      - name: Extract Latest Changelog
+        id: extract_changelog
+        run: |
+          sed -n '/^## \[v/,/^## \[v/p' CHANGELOG.md | sed '$d' > latest_changes.txt
+
       - name: Create Arduino Library Zip
         
         run: zip -r Grobot_Animations.zip . -x ".git*" ".github*"
@@ -24,6 +29,6 @@ jobs:
         with:
           files: Grobot_Animations.zip
           name: Release ${{ github.ref_name }}
-          body_path: CHANGELOG.md
+          body_path: latest_changes.txt
           draft: false
           prerelease: false

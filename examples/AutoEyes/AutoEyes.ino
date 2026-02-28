@@ -1,6 +1,6 @@
 /*
-  Grobot_Animations: BasicEyes Example
-  Demonstrates how to initialize Grobot eyes and cycle through emotions.
+  Grobot_Animations: AutoEyes Example
+  Demonstrates how to use the simplest moodSwitch function.
   Created by Tanmay Wankar, 2026.
 */
 
@@ -11,14 +11,8 @@ TFT_eSPI tft = TFT_eSPI();
 TFT_eSprite canvas = TFT_eSprite(&tft);
 
 // Initialize GrobotEyes(eyeColor, backgroundColor)
-// 0x97E0 is some kind of Green(looked good to me), 0x0000 is Black
+// 0x97E0 is some lighter shade of green , 0x0000 is Black
 GrobotEyes eyes(0x97E0, 0x0000); 
-
-unsigned long lastSwitch = 0;
-int moodIdx = 0; // using a consistent index name
-
-// Switch through built-in moods using the legacy String system
-String moods[] = {"NEUTRAL", "HAPPY", "ANGRY", "SAD", "EXCITED", "ANNOYED", "QUESTIONING", "IDLE1", "IDLE2", "IDLE3"};
 
 void setup() {
   tft.init();
@@ -31,25 +25,14 @@ void setup() {
   eyes.setEmotion("NEUTRAL");
   
   Serial.begin(115200);
-  Serial.println("Animations Initialized");
+  Serial.println("Tnitializing Auto mood switch");
 }
 
 void loop() {
-  // Cycle moods every 4 seconds
-  if (millis() - lastSwitch > 4000) {
-    lastSwitch = millis();
-    eyes.setEmotion(moods[moodIdx]);
-    
-    Serial.print("Current Mood: ");
-    Serial.println(moods[moodIdx]);
-
-    moodIdx++;
-    if (moodIdx > 8) moodIdx = 0;
-  }
-
+  //Use the built-in moodSwitch function to swithc between available moods  
+  eyes.moodSwitch();  
   // This calculates physics AND pushes the sprite to the physical screen
   eyes.renderEmotions(canvas);
-
   // Optional: Display HUD (FPS counter)
   eyes.HUD(tft); 
 }

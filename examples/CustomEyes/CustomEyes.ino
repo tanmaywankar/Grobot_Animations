@@ -29,7 +29,7 @@ void loop() {
     switch(stage) {
       case 0: 
         // 1. Standard Symmetric Mood
-        eyes.setEmotion(MOOD_NEUTRAL; 
+        eyes.setEmotion(MOOD_NEUTRAL); 
         break;
 
       case 1: 
