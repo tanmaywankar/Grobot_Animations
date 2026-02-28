@@ -13,6 +13,8 @@ This library is designed to work within the Arduino IDE ecosystem. Follow these 
 ### Prerequisites
 Before installing this library, ensure you have the [TFT_eSPI](https://github.com/Bodmer/TFT_eSPI) library installed and properly configured for your specific display and pinout in your `User_Setup.h`.
 
+you can now install it directly from Arduino Library Manager. Alternatively here is step by step tutorial if you want to install it from this repository.
+
 ### Step-by-Step Setup
 1. **Download:** Click the green **Code** button at the top of this repository and select **Download ZIP** you can also download stable release from **Releases** Tab.
 2. **Import:** In your Arduino IDE, go to **Sketch** > **Include Library** > **Add .ZIP Library...**
@@ -25,7 +27,7 @@ Before installing this library, ensure you have the [TFT_eSPI](https://github.co
 
 | Component | Specification |
 | :--- | :--- |
-| **Microcontroller** | ESP32 (all variants) or Pi Pico (all variants) |
+| **Microcontroller** | ESP32 (tested with eps32 wroom) or Pi Pico (not yet tested) |
 | **Display Driver** | ILI9341, ST7789, or any driver supported by TFT_eSPI |
 | **Communication** | SPI |
 
@@ -37,8 +39,7 @@ Before installing this library, ensure you have the [TFT_eSPI](https://github.co
 You can trigger different expressions by passing these strings to the `setEmotion()` function:
 
 * **Standard:** `NEUTRAL`, `HAPPY`, `ANGRY`, `SAD`, `EXCITED`, `ANNOYED`, `QUESTIONING`
-* **Dynamic Idles:** `IDLE1`, `IDLE2`, `IDLE3` (Asymmetrical movements)
-
+* **Dynamic Idles:** `IDLE1`, `IDLE2`, `IDLE3`
 ---
 
 ##  Tested on esp 32 wroom32
