@@ -18,8 +18,10 @@ jobs:
       - name: Extract Latest Changelog
         id: extract_changelog
         run: |
-          sed -n '/^## \[v/,/^## \[v/p' CHANGELOG.md | sed '$d' > latest_changes.txt
-
+          # 1. Skip the '# Changelog' header
+          # 2. Grab everything from the first '##' to the second '##'
+          # 3. Remove the last line (the next version's header)
+          sed -n '/^## \[v/,/^## \[v/p' CHANGELOG.md | sed '1!{/^## \[v/d;}' > latest_changes.txt
       - name: Create Arduino Library Zip
         
         run: zip -r Grobot_Animations.zip . -x ".git*" ".github*"
