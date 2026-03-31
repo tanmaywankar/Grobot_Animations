@@ -30,7 +30,7 @@ void setup() {
 
 void loop() {
   //Use the built-in moodSwitch function to swithc between available moods  
-  eyes.moodSwitch();  
+  eyes.moodSwitch(true);  
   // This calculates physics AND pushes the sprite to the physical screen
   eyes.renderEmotions(canvas);
   // Optional: Display HUD (FPS counter)
