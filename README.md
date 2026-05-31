@@ -7,7 +7,7 @@ Optimized for **ESP32** using the `TFT_eSPI` driver (should work on any other su
 ---
 ##  How to animate
 
-many people found it hard to tweak the values without any visual clue. so i introduce you grobot animator, a full web based platform which allows one to change and copy the emotions on the fly.(currently in pre-alpha)
+many people found it hard to tweak the values without any visual clue. so i introduce you grobot animator, a full web based platform which allows one to change and copy the emotions on the fly.
 
 https://tanmaywankar.github.io/GrobotAnimator/
 
