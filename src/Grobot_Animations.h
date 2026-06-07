@@ -26,15 +26,13 @@ struct EyeState {
 class GrobotEyes{
     public:
         GrobotEyes(uint16_t eyeColor, uint16_t bgColor);
-        void setEmotion(MoodData mood);
-        void setEmotion(MoodData left, MoodData right);
-        void setEmotion(String moodName);
+        void setEmotion(const MoodData& mood);
+        void setEmotion(const MoodData& left, const MoodData& right);
         void renderEmotions(TFT_eSprite &canvas);
         void HUD(TFT_eSPI &canvas);
         void updateDeltaTime();
         void blink();
         void lookAt(int x, int y);
-        void moodSwitch(bool toSwitch);
     
     private:
 
@@ -69,10 +67,6 @@ class GrobotEyes{
         float targetCanvasX = 0, targetCanvasY = 0;
         float vCanvasX = 0, vCanvasY = 0;
 
-        //emotion logics
-        unsigned long lastMoodSwitch = 0;
-        int moodIndex = 0;
-        unsigned long switchInterval;
 
         void setBase(EyeState &eye, float top, float bot, float tilt, float pR, float radius);
         void drawEye(TFT_eSprite &canvas, int eX, int eY, int pR, int eyeRadius, int lidH, int botH, int tilt, bool isLeft);

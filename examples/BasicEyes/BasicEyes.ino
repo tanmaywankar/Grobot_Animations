@@ -14,11 +14,9 @@ TFT_eSprite canvas = TFT_eSprite(&tft);
 // 0x97E0 is some kind of Green(looked good to me), 0x0000 is Black
 GrobotEyes eyes(0x97E0, 0x0000); 
 
-unsigned long lastSwitch = 0;
-int moodIdx = 0; // using a consistent index name
-
-// Switch through built-in moods using the legacy String system
-String moods[] = {"NEUTRAL", "HAPPY", "ANGRY", "SAD", "EXCITED", "ANNOYED", "QUESTIONING", "IDLE1", "IDLE2", "IDLE3"};
+uint32_t lastMoodSwitch = 0;
+uint32_t moodSwitchInterval = 5000;
+int moodIndex = 0; // using a consistent index name
 
 void setup() {
   tft.init();
@@ -28,28 +26,37 @@ void setup() {
   // Create the drawing buffer based 320*240 display. do not change it unless you know how it works.(it will scale accordingly based on display size). 
   canvas.createSprite(320, 120);
   //sets initial emotion to be neutral
-  eyes.setEmotion("NEUTRAL");
+  eyes.setEmotion("MOOD_NEUTRAL");
   
   Serial.begin(115200);
   Serial.println("Animations Initialized");
 }
 
 void loop() {
-  // Cycle moods every 4 seconds
-  if (millis() - lastSwitch > 4000) {
-    lastSwitch = millis();
-    eyes.setEmotion(moods[moodIdx]);
-    
-    Serial.print("Current Mood: ");
-    Serial.println(moods[moodIdx]);
-
-    moodIdx++;
-    if (moodIdx > 8) moodIdx = 0;
-  }
-
+  // Cycle moods
+ moodSwitch(true);
   // This calculates physics AND pushes the sprite to the physical screen
   eyes.renderEmotions(canvas);
 
   // Optional: Display HUD (FPS counter)
   eyes.HUD(tft); 
+}
+
+void moodSwitch(bool toSwitch){
+  //employ failsafe mechanisms
+  if(!toSwitch) return;
+  if(millis() - lastMoodSwitch <= moodSwitchInterval) return;
+
+// Switch through built-in moods
+static const char* moods[] = {"MOOD_NEUTRAL", "MOOD_HAPPY", "MOOD_ANGRY", "MOOD_SAD", "MOOD_WINK"};
+const int numMoods = sizeof(moods)/sizeof(moods[0]);
+
+moodIndex = (moodIndex + 1) % numMoods;
+
+eyes.setEmotion(moods[moodIndex]);
+eyes.lookAt(random(-30, 31), random(-20, 21));
+
+lastMoodSwitch = millis();
+moodSwitchInterval = random(5000, 8000);
+
 }

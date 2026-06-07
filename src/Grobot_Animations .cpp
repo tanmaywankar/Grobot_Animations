@@ -17,8 +17,6 @@ GrobotEyes::GrobotEyes(uint16_t eyeColor, uint16_t bgColor)
     blinkTime = DEFAULT_BLINK_TIME;
     blinkDelay = DEFAULT_BLINK_DELAY;
 
-    //mood value
-    switchInterval = 5000;
 
 
 // Setting up initial "Eye" states so they aren't empty
@@ -52,6 +50,7 @@ void  GrobotEyes::updateDeltaTime(){
   lastFrameTime = currentMicros;
   //fps logic
   if (dT < 0.0001) dT = 0.0001;
+  if (dT > 0.05) dT = 0.05;
   if (dT > 0) {
     // We use a slight lerp here so the number doesn't flicker too fast
     float instantFPS = 1.0 / dT;
@@ -112,6 +111,7 @@ void GrobotEyes::renderEmotions(TFT_eSprite &canvas){
   //scaling to work with any display
   float scale = (float)canvas.height() / BASE_DESIGN_HEIGHT;
   //bouncing physics for entire canvas 
+
   applySpring(canvasX, vCanvasX, targetCanvasX, dT, CANVAS_STIFFNESS, CANVAS_DAMPING);
   applySpring(canvasY, vCanvasY, targetCanvasY, dT, CANVAS_STIFFNESS, CANVAS_DAMPING);
 
@@ -145,57 +145,9 @@ canvas.pushSprite(finalX, finalY);
 
 }
 
-//Built-in Moods (legacy code)
-void GrobotEyes::setEmotion(String mood) {
-  
-  if (mood == "NEUTRAL") {
-    setBase(baseL, 0, 0, 0, 30, 45); 
-    setBase(baseR, 0, 0, 0, 30, 45);
-  } 
-  else if (mood == "HAPPY") {
-    setBase(baseL, 0, 50, 0, 30, 45); 
-    setBase(baseR, 0, 50, 0, 30, 45);
-  } 
-  else if (mood == "ANGRY") {
-    setBase(baseL, 0, 0, 60, 30, 45); 
-    setBase(baseR, 0, 0, 60, 30, 45);
-  }
-  else if (mood == "SAD"){
-  setBase(baseL, 0, 0, -60, 27, 45); 
-  setBase(baseR, 0, 0, -60, 27, 45);
-  }
-  else if (mood == "EXCITED"){
-    setBase(baseL, 0, 0, 0, 23, 45); 
-    setBase(baseR, 0, 0, 0, 23, 45);
-  }
-  else if (mood == "ANNOYED") {
-    setBase(baseL, 0, 35, 25, 0, 45); 
-    setBase(baseR, 0, 35, 25, 0, 45);
-  }
-  else if (mood == "QUESTIONING") {
-    setBase(baseL, 0, 0, 0, 30, 45); 
-    setBase(baseR, 50, 0, 0, 30, 45);
-  } 
-  else if (mood == "IDLE1") {
-    setBase(baseL, 0, 0, 0, 30, 45); 
-    setBase(baseR, 0, 0, 0, 15, 30);
-  }
-  else if (mood == "IDLE2") {
-    setBase(baseL, 0, 0, 0, 15, 30);
-    setBase(baseR, 0, 0, 0, 30, 45); 
-  }
-    else if (mood == "IDLE3") {
-    setBase(baseL, 35, 35, 0, 0, 45); 
-    setBase(baseR, 35, 35, 0, 0, 45);
-  }
-
-  // Sync targets with the new base mood
-  targetL = baseL;
-  targetR = baseR;
-}
 
 // To set custom emotions for Asymmetrical eyes
-void GrobotEyes::setEmotion(MoodData left, MoodData right) {
+void GrobotEyes::setEmotion(const MoodData& left, const MoodData& right) {
     setBase(baseL, left.topH, left.botH, left.tilt, left.pR, left.radius);
     setBase(baseR, right.topH, right.botH, right.tilt, right.pR, right.radius);
     
@@ -204,7 +156,7 @@ void GrobotEyes::setEmotion(MoodData left, MoodData right) {
 }
 
 // To set custom emotions for Symmetrical eyes
-void GrobotEyes::setEmotion(MoodData mood) {
+void GrobotEyes::setEmotion(const MoodData& mood) {
     setEmotion(mood, mood); 
 }
 
@@ -240,33 +192,6 @@ void GrobotEyes::blink(){
   
 }
 
-//just a basic loop for demo purpose, needs to be optimized (will do later)
-void GrobotEyes::moodSwitch(bool toSwitch){
-  if(toSwitch){
-     if (millis() - lastMoodSwitch > switchInterval) {
-    moodIndex++;
-    if (moodIndex > 9) moodIndex = 0; // Reset mood
-
-    if (moodIndex == 0) setEmotion("NEUTRAL");
-    else if (moodIndex == 1) setEmotion("HAPPY");
-    else if (moodIndex == 2) setEmotion("ANGRY");
-    else if (moodIndex == 3) setEmotion("SAD");
-    else if (moodIndex == 4) setEmotion("EXCITED");
-    else if (moodIndex == 5) setEmotion("ANNOYED");
-    else if (moodIndex == 6) setEmotion("QUESTIONING");
-    else if (moodIndex == 7) setEmotion("IDLE1");
-    else if (moodIndex == 8) setEmotion("IDLE2");
-    else if (moodIndex == 9) setEmotion("IDLE3");
-    lookAt(random(-30, 31), random(-20, 21));
-    lastMoodSwitch = millis();
-    
-    // Randomize the NEXT interval for variety (5s to 8s)
-    switchInterval = random(5000, 8000);
-  }
- 
-  }
-
-}
 
 void GrobotEyes::lookAt(int x, int y) {
   targetCanvasX = x; 
