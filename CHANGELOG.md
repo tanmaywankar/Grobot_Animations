@@ -1,10 +1,12 @@
 # Changelog
 ## [v0.1.4] - 2026-06-07
 
-## Fixed:
+### Fixed:
 - optimized the code by deleting redundancies
 - a lot of bug fixes
 - removed `AutoEyes.ino` and implemented its code directly into `BasicEyes.ino`.
+
+
 
 ## [v0.1.3] - 2026-02-28
 
