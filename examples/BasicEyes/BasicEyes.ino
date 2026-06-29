@@ -26,7 +26,7 @@ void setup() {
   // Create the drawing buffer based 320*240 display. do not change it unless you know how it works.(it will scale accordingly based on display size). 
   canvas.createSprite(320, 120);
   //sets initial emotion to be neutral
-  eyes.setEmotion("MOOD_NEUTRAL");
+  eyes.setEmotion(MOOD_NEUTRAL);
   
   Serial.begin(115200);
   Serial.println("Animations Initialized");
@@ -48,7 +48,7 @@ void moodSwitch(bool toSwitch){
   if(millis() - lastMoodSwitch <= moodSwitchInterval) return;
 
 // Switch through built-in moods
-static const char* moods[] = {"MOOD_NEUTRAL", "MOOD_HAPPY", "MOOD_ANGRY", "MOOD_SAD", "MOOD_WINK"};
+static const MoodData moods[] = {MOOD_NEUTRAL, MOOD_HAPPY, MOOD_ANGRY, MOOD_SAD, MOOD_WINK};
 const int numMoods = sizeof(moods)/sizeof(moods[0]);
 
 moodIndex = (moodIndex + 1) % numMoods;

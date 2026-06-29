@@ -1,4 +1,11 @@
 # Changelog
+
+## [v0.1.5] - 2026-06-29
+
+### Fixed:
+- its just a hotfix update.
+- fixed dataType mismatch in `BasicEyes.ino`
+
 ## [v0.1.4] - 2026-06-07
 
 ### Fixed:
